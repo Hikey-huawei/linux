@@ -363,7 +363,8 @@
 				/* platform-quirks = <1>; */
 				/* WL12XX_REFCLOCK_38_XTAL */
 				/* board-ref-clock = <4>; */
-				ref-clock-frequency = <38400000>;
+/*				ref-clock-frequency = <38400000>;
+ */
 			};
 		};
 
