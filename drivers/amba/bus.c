@@ -359,8 +359,10 @@ int amba_device_add(struct amba_device *dev, struct resource *parent)
 		goto err_out;
 
 	/* Hard-coded primecell ID instead of plug-n-play */
-	if (dev->periphid != 0)
+	if (dev->periphid != 0) {
+		printk("aba1\n");
 		goto skip_probe;
+	}
 
 	/*
 	 * Dynamically calculate the size of the resource
@@ -374,9 +376,12 @@ int amba_device_add(struct amba_device *dev, struct resource *parent)
 	}
 
 	ret = amba_get_enable_pclk(dev);
+	printk("aba2\n");
+
 	if (ret == 0) {
 		u32 pid, cid;
 
+		printk("aba3\n");
 		/*
 		 * Read pid and cid based on size of resource
 		 * they are located at end of region
@@ -388,6 +393,7 @@ int amba_device_add(struct amba_device *dev, struct resource *parent)
 			cid |= (readl(tmp + size - 0x10 + 4 * i) & 255) <<
 				(i * 8);
 
+		printk("pid=%08X, cid=%08X\n", pid, cid);
 		amba_put_disable_pclk(dev);
 
 		if (cid == AMBA_CID || cid == CORESIGHT_CID)
@@ -396,6 +402,7 @@ int amba_device_add(struct amba_device *dev, struct resource *parent)
 		if (!dev->periphid)
 			ret = -ENODEV;
 	}
+	printk("aba4\n");
 
 	iounmap(tmp);
 
@@ -403,6 +410,7 @@ int amba_device_add(struct amba_device *dev, struct resource *parent)
 		goto err_release;
 
  skip_probe:
+	printk("aba5\n");
 	ret = device_add(&dev->dev);
 	if (ret)
 		goto err_release;
