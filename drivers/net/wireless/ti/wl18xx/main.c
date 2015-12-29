@@ -1397,6 +1397,14 @@ static int wl18xx_load_conf_file(struct device *dev, struct wlcore_conf *conf,
 		return ret;
 	}
 
+	wl1271_error("WL18XX_CONF_SIZE=%d\n", WL18XX_CONF_SIZE);
+	wl1271_error("sizeof(struct wl18xx_priv_conf)=%d\n",
+			sizeof(struct wl18xx_priv_conf));
+	wl1271_error("sizeof(struct wlcore_conf_header)=%d\n",
+			sizeof(struct wlcore_conf_header));
+	wl1271_error("sizeof(struct wlcore_conf)=%d\n",
+			sizeof(struct wlcore_conf));
+
 	if (fw->size != WL18XX_CONF_SIZE) {
 		wl1271_error("configuration binary file size is wrong, expected %zu got %zu",
 			     WL18XX_CONF_SIZE, fw->size);
